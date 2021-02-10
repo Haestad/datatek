@@ -23,20 +23,28 @@ class Cipher:
          87: 'w', 88: 'x', 89: 'y', 90: 'z', 91: '{',
          92: '|', 93: '}', 94: '~'}
 
+    alphabet_size = len(alphabet)
+
     def __init__(self):
         pass
 
     def encode(self, message, key):
-        pass
+        """ Dummy method for encoding the message """
 
     def decode(self, message, key):
-        pass
+        """ Dummy method for decoding the message """
+
+    def generate_keys(self):
+        """ Dummy method for generating decryption/encryption keys """
 
     @staticmethod
-    def verify():
-        pass
+    def verify(message, decoded_message):
+        """
+        Verifies that the two given messages are equal
 
-
-if __name__ == '__main__':
-    for letter in range(len(Cipher.alphabet)):
-        print(ord(Cipher.alphabet[letter]))
+        :param message: String (message)
+        :param decoded_message: String (message after it has been encoded and decoded)
+        """
+        if message == decoded_message:
+            return True
+        return False
