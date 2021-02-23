@@ -17,6 +17,8 @@ if __name__ == '__main__':
     s1 = Sender()
     r1 = Receiver()
 
+    MESSAGE = "what if i change the message?"
+
     # test Caesar
     key = c1.generate_keys()
 
@@ -26,12 +28,10 @@ if __name__ == '__main__':
     r1.set_cipher(c1)
     r1.set_key(key)
 
-    melding = "what if i change the message?"
-
-    enc_melding = s1.operate_cipher(melding)
+    enc_melding = s1.operate_cipher(MESSAGE)
     dec_melding = r1.operate_cipher(enc_melding)
 
-    if Cipher.verify(melding, dec_melding):
+    if Cipher.verify(MESSAGE, dec_melding):
         print("verified melding 1")
 
     # test Multiplication
@@ -43,10 +43,10 @@ if __name__ == '__main__':
     r1.set_cipher(c2)
     r1.set_key(key)
 
-    enc_melding = s1.operate_cipher(melding)
+    enc_melding = s1.operate_cipher(MESSAGE)
     dec_melding = r1.operate_cipher(enc_melding)
 
-    if Cipher.verify(melding, dec_melding):
+    if Cipher.verify(MESSAGE, dec_melding):
         print("verified melding 2")
 
     # test Affine
@@ -58,10 +58,10 @@ if __name__ == '__main__':
     r1.set_cipher(c3)
     r1.set_key(key)
 
-    enc_melding = s1.operate_cipher(melding)
+    enc_melding = s1.operate_cipher(MESSAGE)
     dec_melding = r1.operate_cipher(enc_melding)
 
-    if Cipher.verify(melding, dec_melding):
+    if Cipher.verify(MESSAGE, dec_melding):
         print("verified melding 3")
 
     # test Unbreakable
@@ -73,10 +73,10 @@ if __name__ == '__main__':
     r1.set_cipher(c4)
     r1.set_key(key)
 
-    enc_melding = s1.operate_cipher(melding)
+    enc_melding = s1.operate_cipher(MESSAGE)
     dec_melding = r1.operate_cipher(enc_melding)
 
-    if Cipher.verify(melding, dec_melding):
+    if Cipher.verify(MESSAGE, dec_melding):
         print("verified melding 4")
 
     # test RSA
@@ -88,8 +88,8 @@ if __name__ == '__main__':
     r1.set_cipher(c5)
     r1.set_key((key[0], key[2]))
 
-    enc_melding = s1.operate_cipher(melding)
+    enc_melding = s1.operate_cipher(MESSAGE)
     dec_melding = r1.operate_cipher(enc_melding)
 
-    if Cipher.verify(melding, dec_melding):
+    if Cipher.verify(MESSAGE, dec_melding):
         print("verified melding 5")

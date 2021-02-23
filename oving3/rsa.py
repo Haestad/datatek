@@ -1,6 +1,6 @@
 import random
 from cipher import Cipher
-from crypto_utils import blocks_from_text, text_from_blocks, generate_random_prime, modular_inverse
+from oving3.crypto_utils import blocks_from_text, text_from_blocks, generate_random_prime, modular_inverse
 
 
 class RSA(Cipher):

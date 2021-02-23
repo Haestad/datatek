@@ -1,7 +1,7 @@
-import random
-
 from cipher import Cipher
-from crypto_utils import modular_inverse
+from oving3.crypto_utils import modular_inverse
+from caesar import Caesar
+from multiplication import Multiplication
 
 
 class Affine(Cipher):
@@ -41,10 +41,6 @@ class Affine(Cipher):
         return decoded_message
 
     def generate_keys(self):
-        c_key = random.randint(1, Cipher.alphabet_size)
-        m_key = random.randint(1, 999)
-        while True:
-            if not modular_inverse(m_key, Cipher.alphabet_size):
-                m_key = random.randint(1, 999)
-            else:
-                return c_key, m_key
+        c_key = Caesar.generate_keys()
+        m_key = Multiplication.generate_keys()
+        return c_key, m_key

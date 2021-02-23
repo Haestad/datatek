@@ -25,9 +25,6 @@ class Cipher:
 
     alphabet_size = len(alphabet)
 
-    def __init__(self):
-        pass
-
     def encode(self, message, key):
         """ Dummy method for encoding the message """
 

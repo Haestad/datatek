@@ -38,7 +38,8 @@ class Caesar(Cipher):
             decoded_message += Cipher.alphabet[letter_num]
         return decoded_message
 
-    def generate_keys(self):
+    @staticmethod
+    def generate_keys():
         """ generates a key to encrypt/decrypt with
 
         :return: random integer between 1 and the size of the alphabet"""

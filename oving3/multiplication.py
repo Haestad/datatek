@@ -1,6 +1,6 @@
 import random
 from cipher import Cipher
-from crypto_utils import modular_inverse
+from oving3.crypto_utils import modular_inverse
 
 
 class Multiplication(Cipher):
@@ -36,7 +36,8 @@ class Multiplication(Cipher):
             decoded_message += Cipher.alphabet[letter_num]
         return decoded_message
 
-    def generate_keys(self):
+    @staticmethod
+    def generate_keys():
         """ generates a key to encrypt/decrypt with, makes sure that the key has a modular inverse
 
         :return: random integer between 1 and 999"""
