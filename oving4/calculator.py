@@ -44,19 +44,52 @@ class Calculator:
                 stack.push(item.execute(num1, num2))
         return stack.pop()
 
+    def shunting_yard(self, input_queue):
+        """ Takes in an "normal" input queue, and converts it to RPN.
+        The RPN output is pushed to the output queue in the right order.
+        """
+        operator_stack = Stack()
+        for item in input_queue:
+            if isinstance(item, numbers.Number):
+                self.output_queue.push(item)
+
+            elif isinstance(item, Function):
+                operator_stack.push(item)
+
+            elif item == '(':
+                operator_stack.push(item)
+
+            elif item == ')':
+                while not operator_stack.peek() == '(':
+                    self.output_queue.push(operator_stack.pop())
+                operator_stack.pop()
+
+            elif isinstance(item, Operator):
+                while not (operator_stack.is_empty() or operator_stack.peek() == '(' or
+                           operator_stack.peek().strength < item.strength):
+                    self.output_queue.push(operator_stack.pop())
+                operator_stack.push(item)
+
+        while not operator_stack.is_empty():
+            self.output_queue.push(operator_stack.pop())
+
 
 if __name__ == '__main__':
     print('Uses the calculator methods directly:')
     calc = Calculator()
-    print(calc.functions['EXP'].execute(
-        calc.operators['ADD'].execute(1,
-                                      calc.operators['MULTIPLY'].execute(2, 3))))
+    print('result: ' + str(calc.functions['EXP'].execute(
+        calc.operators['ADD'].execute(1, calc.operators['MULTIPLY'].execute(2, 3)))))
 
-    print('\nUses the output_queue and RPN()_')
+    print('\nUses self.output_queue and RPN():')
     calc.output_queue.push(1)
     calc.output_queue.push(2)
     calc.output_queue.push(3)
     calc.output_queue.push(calc.operators['MULTIPLY'])
     calc.output_queue.push(calc.operators['ADD'])
     calc.output_queue.push(calc.functions['EXP'])
-    print(calc.RPN())
+    print(f'result: {calc.RPN()}')
+
+    print('\nUses shunting_yard() in combination with RPN():')
+    list_input = [calc.functions['EXP'], '(', 1, calc.operators['ADD'], 2, calc.operators['MULTIPLY'], 3, ')']
+    calc.shunting_yard(list_input)
+    print(f'result: {calc.RPN()}')
