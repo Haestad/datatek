@@ -90,6 +90,8 @@ if __name__ == '__main__':
     print(f'result: {calc.RPN()}')
 
     print('\nUses shunting_yard() in combination with RPN():')
-    list_input = [calc.functions['EXP'], '(', 1, calc.operators['ADD'], 2, calc.operators['MULTIPLY'], 3, ')']
+    list_input = [calc.functions['EXP'],
+                  '(', 1, calc.operators['ADD'], 2,
+                  calc.operators['MULTIPLY'], 3, ')']
     calc.shunting_yard(list_input)
     print(f'result: {calc.RPN()}')
