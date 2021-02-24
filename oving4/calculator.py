@@ -88,10 +88,10 @@ class Calculator:
             number = re.search("^[-0-9.]+", txt)
             parentheses = re.search("^[()]", txt)
 
-            func_targets = '|'.join(["^" + func for func in calc.functions.keys()])
+            func_targets = '|'.join(["^" + func for func in self.functions])
             function = re.search(func_targets, txt)
 
-            op_targets = '|'.join(["^" + op for op in calc.operators.keys()])
+            op_targets = '|'.join(["^" + op for op in self.operators])
             operator = re.search(op_targets, txt)
 
             text_index = 0
@@ -121,34 +121,7 @@ class Calculator:
 
 
 if __name__ == '__main__':
-    print('Uses the calculator methods directly:')
     calc = Calculator()
-    print('result: ' + str(calc.functions['EXP'].execute(
-        calc.operators['ADD'].execute(1, calc.operators['MULTIPLY'].execute(2, 3)))))
-
-    print('\nUses self.output_queue and RPN():')
-    calc.output_queue.push(1)
-    calc.output_queue.push(2)
-    calc.output_queue.push(3)
-    calc.output_queue.push(calc.operators['MULTIPLY'])
-    calc.output_queue.push(calc.operators['ADD'])
-    calc.output_queue.push(calc.functions['EXP'])
-    print(f'result: {calc.RPN()}')
-
-    print('\nUses shunting_yard() in combination with RPN():')
-    list_input = [calc.functions['EXP'],
-                  '(', 1, calc.operators['ADD'], 2,
-                  calc.operators['MULTIPLY'], 3, ')']
-    calc.shunting_yard(list_input)
-    print(f'result: {calc.RPN()}')
-
-    print('\nUses text_parser() to parse a string, then shunting_yard(), then RPN():')
-    text = "exp (1 add 2 multiply 3)"
-    calc.shunting_yard(calc.text_parser(text))
-    print(f'result: {calc.RPN()}')
-
-    print('\nUses calculate_expression() to calculate different expressions')
-    s1 = 'EXP (1 add 2 multiply 3)'
-    s2 = '((15 DIVIDE (7 SUBTRACT (1 ADD 1))) MULTIPLY 3)SUBTRACT (2 ADD (1 ADD 1))'
-    print(f'result: {calc.calculate_expression(s1)}')
-    print(f'result: {calc.calculate_expression(s2)}')
+    while True:
+        text = input("expression to calculate: ")
+        print(calc.calculate_expression(text))
