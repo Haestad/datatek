@@ -13,7 +13,7 @@ class Function:
     def __init__(self, func):
         self.func = func
 
-    def execute(self, element, debug=True):
+    def execute(self, element, debug=False):
         """ Executes self.func with the given element, and returns the result.
         If debug == True, prints the function and calculation in console.
         """
@@ -38,7 +38,7 @@ class Operator:
         self.operation = operation
         self.strength = strength
 
-    def execute(self, element1, element2, debug=True):
+    def execute(self, element1, element2, debug=False):
         """ Executes self.operation with the given elements, and returns the result.
                If debug == True, prints the function and calculation in console.
                """
