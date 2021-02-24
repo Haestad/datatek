@@ -1,5 +1,6 @@
 """ This module contains the Calculator class. """
 import numbers
+import re
 
 import numpy
 
@@ -34,14 +35,18 @@ class Calculator:
         stack = Stack()
         while not self.output_queue.is_empty():
             item = self.output_queue.pop()
+
             if isinstance(item, numbers.Number):
                 stack.push(item)
+
             elif isinstance(item, Function):
                 stack.push(item.execute(stack.pop()))
+
             elif isinstance(item, Operator):
                 num2 = stack.pop()
                 num1 = stack.pop()
                 stack.push(item.execute(num1, num2))
+
         return stack.pop()
 
     def shunting_yard(self, input_queue):
@@ -73,6 +78,40 @@ class Calculator:
         while not operator_stack.is_empty():
             self.output_queue.push(operator_stack.pop())
 
+    def text_parser(self, input_string):
+        """ Takes in a string,
+        and parses it into a list that shunting_yard() can understand.
+        """
+        output_list = []
+        input_string = input_string.replace(" ", "").upper()
+        while input_string:
+            number = re.search("^[-0-9.]+", input_string)
+            parentheses = re.search("^[()]", input_string)
+
+            func_targets = '|'.join(["^" + func for func in calc.functions.keys()])
+            function = re.search(func_targets, input_string)
+
+            op_targets = '|'.join(["^" + op for op in calc.operators.keys()])
+            operator = re.search(op_targets, input_string)
+
+            text_index = 0
+            if number:
+                output_list.append(float(number.group(0)))
+                text_index = number.end(0)
+            elif parentheses:
+                output_list.append((parentheses.group(0)))
+                text_index = parentheses.end(0)
+            elif function:
+                output_list.append(self.functions[function.group(0)])
+                text_index = function.end(0)
+            elif operator:
+                output_list.append((self.operators[operator.group(0)]))
+                text_index = operator.end(0)
+
+            input_string = input_string[text_index:]
+
+        return output_list
+
 
 if __name__ == '__main__':
     print('Uses the calculator methods directly:')
@@ -94,4 +133,9 @@ if __name__ == '__main__':
                   '(', 1, calc.operators['ADD'], 2,
                   calc.operators['MULTIPLY'], 3, ')']
     calc.shunting_yard(list_input)
+    print(f'result: {calc.RPN()}')
+
+    print('\nUses text_parser() to parse a string, then shunting_yard(), then RPN():')
+    text = "exp (1 add 2 multiply 3)"
+    calc.shunting_yard(calc.text_parser(text))
     print(f'result: {calc.RPN()}')
