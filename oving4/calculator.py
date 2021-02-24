@@ -78,21 +78,21 @@ class Calculator:
         while not operator_stack.is_empty():
             self.output_queue.push(operator_stack.pop())
 
-    def text_parser(self, input_string):
+    def text_parser(self, txt):
         """ Takes in a string,
         and parses it into a list that shunting_yard() can understand.
         """
         output_list = []
-        input_string = input_string.replace(" ", "").upper()
-        while input_string:
-            number = re.search("^[-0-9.]+", input_string)
-            parentheses = re.search("^[()]", input_string)
+        txt = txt.replace(" ", "").upper()
+        while txt:
+            number = re.search("^[-0-9.]+", txt)
+            parentheses = re.search("^[()]", txt)
 
             func_targets = '|'.join(["^" + func for func in calc.functions.keys()])
-            function = re.search(func_targets, input_string)
+            function = re.search(func_targets, txt)
 
             op_targets = '|'.join(["^" + op for op in calc.operators.keys()])
-            operator = re.search(op_targets, input_string)
+            operator = re.search(op_targets, txt)
 
             text_index = 0
             if number:
@@ -108,9 +108,16 @@ class Calculator:
                 output_list.append((self.operators[operator.group(0)]))
                 text_index = operator.end(0)
 
-            input_string = input_string[text_index:]
+            txt = txt[text_index:]
 
         return output_list
+
+    def calculate_expression(self, txt):
+        """ Takes in an expressing in string form,
+        and uses the other methods in Calculator to calculate a result.
+        """
+        self.shunting_yard(self.text_parser(txt))
+        return self.RPN()
 
 
 if __name__ == '__main__':
@@ -139,3 +146,9 @@ if __name__ == '__main__':
     text = "exp (1 add 2 multiply 3)"
     calc.shunting_yard(calc.text_parser(text))
     print(f'result: {calc.RPN()}')
+
+    print('\nUses calculate_expression() to calculate different expressions')
+    s1 = 'EXP (1 add 2 multiply 3)'
+    s2 = '((15 DIVIDE (7 SUBTRACT (1 ADD 1))) MULTIPLY 3)SUBTRACT (2 ADD (1 ADD 1))'
+    print(f'result: {calc.calculate_expression(s1)}')
+    print(f'result: {calc.calculate_expression(s2)}')
