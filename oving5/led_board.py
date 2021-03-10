@@ -20,6 +20,7 @@ class LEDBoard:
         for i in range(len(charlieplexing_pins)):
             if i not in (self.LED_MAP[led_index][0], self.LED_MAP[led_index][1]):
                 c_pin_inactive = charlieplexing_pins[i]
+                break
 
         return c_pin_high, c_pin_low, c_pin_inactive
 
