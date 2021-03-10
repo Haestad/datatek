@@ -1,5 +1,3 @@
-import re
-
 from fsm import Rule, FSM
 from kpc import KPC
 
@@ -24,7 +22,6 @@ rules_list = [
     Rule('S-Read-2', 'S-Active', Rule.signal_is_any, agent.reset_agent),
     Rule('S-Validate', 'S-Active', Rule.signal_is_any, agent.reset_agent),
     Rule('S-Active', 'S-end', '#', agent.exit_action)
-
 ]
 
 for rule in rules_list:
