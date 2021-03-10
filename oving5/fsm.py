@@ -51,7 +51,7 @@ class Rule:
         if state == self.state1:
             if signal == self.signal:
                 return True
-            if isfunction(self.signal):
+            elif isfunction(self.signal):
                 return self.signal(signal)
         return False
 
