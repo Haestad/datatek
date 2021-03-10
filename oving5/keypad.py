@@ -20,7 +20,7 @@ class Keypad:
         (PIN_KEYPAD_ROW_2, PIN_KEYPAD_COL_2): 9,
         (PIN_KEYPAD_ROW_3, PIN_KEYPAD_COL_0): '*',
         (PIN_KEYPAD_ROW_3, PIN_KEYPAD_COL_1): 0,
-        (PIN_KEYPAD_ROW_3, PIN_KEYPAD_COL_2): '#',
+        (PIN_KEYPAD_ROW_3, PIN_KEYPAD_COL_2): '#'
     }
 
     def __init__(self):
