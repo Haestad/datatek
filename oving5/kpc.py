@@ -91,6 +91,8 @@ class KPC:
         """ Executes the given action in KPC. """
         return action()
 
+    # LED Board methods
+
     def light_one_led(self):
         """ Lights the LED with the agents led pin and duration, and then clears the values. """
         self.led_board.turn_on_led(self.led_pin)

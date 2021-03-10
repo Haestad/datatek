@@ -46,13 +46,16 @@ class LEDBoard:
     def flash_all_led(self, time_active, led_list=None):
         """ Flashes all LEDs on and off for k seconds. """
         if led_list is None:
-            led_list = [d_led for d_led in range(len(self.LED_MAP))]
-        self.twinkle_all_led(time_active, led_list, refresh_time=0.03)
+            led_list = [led for led in range(len(self.LED_MAP))]
+        start_time = time()
+        while time() < start_time + time_active:
+            self.twinkle_all_led(0.3, led_list, refresh_time=0.03)
+            sleep(0.3)
 
     def twinkle_all_led(self, time_active, led_list=None, refresh_time=0.3):
         """ Turn all LEDs on and off in a sequence for k seconds. """
         if led_list is None:
-            led_list = [d_led for d_led in range(len(self.LED_MAP))]
+            led_list = [led for led in range(len(self.LED_MAP))]
         start_time = time()
         while time() < start_time + time_active:
             for d_led in led_list:
@@ -62,5 +65,6 @@ class LEDBoard:
 
 
 if __name__ == '__main__':
-    led = LEDBoard()
-    led.flash_all_led(3)
+    led_board = LEDBoard()
+    led_board.flash_all_led(3)
+    led_board.twinkle_all_led(3)
