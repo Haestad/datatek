@@ -21,7 +21,7 @@ class KPC:
     def reset_passcode_entry(self):
         """ Clear passcode_buffer and initiate 'power up' lighting sequence. """
         self.passcode_buffer = ""
-        self.power_up_leds()
+        self.power_up_led()
 
     def reset_agent(self):
         """ Resets the agent to a neutral state. """
@@ -50,10 +50,10 @@ class KPC:
             correct_pw = pw_file.read()
         if self.passcode_buffer == correct_pw:
             self.override_signal = 'Y'
-            self.twinkle_leds()
+            self.twinkle_led()
         else:
             self.override_signal = 'N'
-            self.flash_leds()
+            self.flash_led()
 
     def validate_password_change(self):
         """ Checks if the new password is legal. A legal password should be at least 4 digits long,
@@ -64,10 +64,10 @@ class KPC:
             with open(self.password_path, 'w') as pw_file:
                 pw_file.write(self.passcode_buffer)
             self.override_signal = 'Y'
-            self.twinkle_leds()
+            self.twinkle_led()
         else:
             self.override_signal = 'N'
-            self.flash_leds()
+            self.flash_led()
 
     def fully_activate_agent(self):
         """ Called when agent is activated. """
@@ -76,7 +76,7 @@ class KPC:
     def exit_action(self):
         """ Called when exiting agent. """
         self.reset_agent()
-        self.power_down_leds()
+        self.power_down_led()
 
     def select_pin(self):
         """ Selects a LED pin to light up. """
@@ -99,24 +99,24 @@ class KPC:
         self.led_pin = None
         self.led_duration = 0
 
-    def flash_leds(self):
+    def flash_led(self):
         """ Flashes all LEDs for 1 seconds. """
-        self.led_board.flash_all_leds(1)
+        self.led_board.flash_all_led(1)
 
-    def twinkle_leds(self):
+    def twinkle_led(self):
         """ Twinkles all LEDs for 1 seconds """
-        self.led_board.twinkle_all_leds(1)
+        self.led_board.twinkle_all_led(1)
 
-    def power_up_leds(self):
+    def power_up_led(self):
         """ The LED sequence for powering up. """
-        leds = []
+        led_list = []
         for i in range(0, 5):
-            leds.append(i)
-            self.led_board.flash_all_leds(0.2, leds)
+            led_list.append(i)
+            self.led_board.flash_all_led(0.2, led_list)
 
-    def power_down_leds(self):
+    def power_down_led(self):
         """ The LED sequence for powering down. """
-        leds = [0, 1, 2, 3, 4]
+        led_list = [0, 1, 2, 3, 4]
         for i in range(0, 5):
-            self.led_board.flash_all_leds(0.2, leds)
-            leds.pop()
+            self.led_board.flash_all_led(0.2, led_list)
+            led_list.pop()

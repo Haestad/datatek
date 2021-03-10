@@ -36,26 +36,31 @@ class LEDBoard:
         self.GPIO.show_leds_states()
 
     def turn_off_led(self, led_index):
+        """ Lights off the LED on the given index. """
         pins = self.get_pin_values(led_index)
         self.GPIO.setup(pins[0], self.GPIO.IN)
         self.GPIO.setup(pins[1], self.GPIO.IN)
 
         self.GPIO.show_leds_states()
 
-    def flash_all_leds(self, k, leds=[led for led in range(len(LED_MAP))]):
+    def flash_all_led(self, time_active, led_list=None):
         """ Flashes all LEDs on and off for k seconds. """
-        self.twinkle_all_leds(k, leds, sleep_time=0.03)
+        if led_list is None:
+            led_list = [d_led for d_led in range(len(self.LED_MAP))]
+        self.twinkle_all_led(time_active, led_list, refresh_time=0.03)
 
-    def twinkle_all_leds(self, k, leds=[led for led in range(len(LED_MAP))], sleep_time=0.3):
+    def twinkle_all_led(self, time_active, led_list=None, refresh_time=0.3):
         """ Turn all LEDs on and off in a sequence for k seconds. """
+        if led_list is None:
+            led_list = [d_led for d_led in range(len(self.LED_MAP))]
         start_time = time()
-        while time() < start_time + k:
-            for led in leds:
-                self.turn_on_led(led)
-                sleep(sleep_time)
-                self.turn_off_led(led)
+        while time() < start_time + time_active:
+            for d_led in led_list:
+                self.turn_on_led(d_led)
+                sleep(refresh_time)
+                self.turn_off_led(d_led)
 
 
 if __name__ == '__main__':
     led = LEDBoard()
-    led.flash_all_leds(3)
+    led.flash_all_led(3)
