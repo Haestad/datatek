@@ -1,7 +1,5 @@
 """ This module contains the class for the LED board """
-import sys
 from time import time, sleep
-
 from GPIOSimulator_v5 import GPIOSimulator, charlieplexing_pins
 
 
@@ -12,7 +10,8 @@ class LEDBoard:
     LED_MAP = [(0, 1), (1, 0), (1, 2), (2, 1), (0, 2), (2, 0)]
 
     def get_pin_values(self, led_index):
-        """ Returns the value the charlieplexed pins need to turn on a specific LED. """
+        """ Returns the value the charlieplexed pins needs to turn on a specific LED,
+        given by the led_index. """
         c_pin_high = charlieplexing_pins[(self.LED_MAP[led_index])[0]]
         c_pin_low = charlieplexing_pins[(self.LED_MAP[led_index])[1]]
 
@@ -66,5 +65,6 @@ class LEDBoard:
 
 if __name__ == '__main__':
     led_board = LEDBoard()
-    led_board.flash_all_led(3)
-    led_board.twinkle_all_led(3)
+    led_board.turn_on_led(1)
+    sleep(3)
+    led_board.turn_off_led(1)

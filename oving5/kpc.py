@@ -81,6 +81,7 @@ class KPC:
     def select_pin(self):
         """ Selects a LED pin to light up. """
         self.led_pin = self.current_signal
+        self.led_duration = ""
 
     def append_dur(self):
         """ Selects how long the LED should light up. """
