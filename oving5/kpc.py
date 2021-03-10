@@ -16,7 +16,7 @@ class KPC:
         self.current_signal = None
         self.passcode_buffer = ""
         self.led_pin = 0
-        self.led_duration = 0
+        self.led_duration = ""
 
     def reset_passcode_entry(self):
         """ Clear passcode_buffer and initiate 'power up' lighting sequence. """
@@ -84,7 +84,7 @@ class KPC:
 
     def append_dur(self):
         """ Selects how long the LED should light up. """
-        self.led_duration += int(self.current_signal)
+        self.led_duration += str(self.current_signal)
 
     @staticmethod
     def do_action(action: Callable[[], bool]):
@@ -94,10 +94,10 @@ class KPC:
     def light_one_led(self):
         """ Lights the LED with the agents led pin and duration, and then clears the values. """
         self.led_board.turn_on_led(self.led_pin)
-        sleep(self.led_duration)
+        sleep(int(self.led_duration))
         self.led_board.turn_off_led(self.led_pin)
         self.led_pin = None
-        self.led_duration = 0
+        self.led_duration = ""
 
     def flash_led(self):
         """ Flashes all LEDs for 1 seconds. """
