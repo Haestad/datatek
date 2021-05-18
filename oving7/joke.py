@@ -1,4 +1,8 @@
+""" This module contains the Joke class. """
+
+
 class Joke:
+    """ This class contains the joke data. """
 
     def __init__(self, file, original_id, ordered_id, category, content, score):
         self.file = file
